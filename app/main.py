@@ -2,7 +2,7 @@ import sys
 
 
 def main() -> None:
-    sys.stdout.write('$')
+    sys.stdout.write('$ ')
     sys.stdout.flush()
 
     user_input: str = input()
