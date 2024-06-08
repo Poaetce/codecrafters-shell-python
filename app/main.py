@@ -10,6 +10,8 @@ def main() -> None:
         command: str = user_input.split(' ')[0]
 
         match command:
+            case 'exit':
+                exit()
             case _:
                 sys.stdout.write(f"{command}: command not found")
     
