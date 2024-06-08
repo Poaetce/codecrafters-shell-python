@@ -26,6 +26,7 @@ def type_command(*arguments: str) -> None:
             file_path: str = os.path.join(path, command)
             if os.path.exists(file_path):
                 sys.stdout.write(f"{command} is {file_path}")
+                break
         else:
             sys.stdout.write(f"{command} not found")
 
