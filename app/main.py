@@ -1,6 +1,9 @@
 from typing import Callable
 
 import sys
+import os
+
+paths: list[str] = (os.getenv("PATH") or '').split(":")
 
 
 def exit_command(*_: str) -> None:
@@ -17,8 +20,14 @@ def type_command(*arguments: str) -> None:
 
     if command in builtin_commands:
         sys.stdout.write(f"{command} is a shell builtin")
+
     else:
-        sys.stdout.write(f"{command} not found")
+        for path in paths:
+            file_path: str = os.path.join(path, command)
+            if os.path.exists(file_path):
+                sys.stdout.write(f"{command} is {file_path}")
+        else:
+            sys.stdout.write(f"{command} not found")
 
 
 builtin_commands: dict[str, Callable] = {
