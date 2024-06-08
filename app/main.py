@@ -12,6 +12,11 @@ def main() -> None:
         match command:
             case 'exit':
                 exit()
+            
+            case 'echo':
+                content: str = user_input.split(' ', 1)[1]
+                sys.stdout.write(content)
+
             case _:
                 sys.stdout.write(f"{command}: command not found")
     
