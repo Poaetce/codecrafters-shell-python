@@ -24,7 +24,7 @@ def type_command(*arguments: str) -> None:
 builtin_commands: dict[str, Callable] = {
     'exit': exit_command,
     'echo': echo_command,
-    'type': type_command
+    'type': type_command,
 }
 
 
