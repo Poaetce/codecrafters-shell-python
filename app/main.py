@@ -1,4 +1,31 @@
+from typing import Callable
+
 import sys
+
+
+def exit_command(*_: str) -> None:
+    exit()
+
+
+def echo_command(*arguments: str) -> None:
+    content: str = ' '.join(arguments)
+    sys.stdout.write(content)
+
+
+def type_command(*arguments: str) -> None:
+    command: str = arguments[0]
+
+    if command in builtin_commands:
+        sys.stdout.write(f"{command} is a shell builtin")
+    else:
+        sys.stdout.write(f"{command} not found")
+
+
+builtin_commands: dict[str, Callable] = {
+    'exit': exit_command,
+    'echo': echo_command,
+    'type': type_command
+}
 
 
 def main() -> None:
@@ -6,19 +33,14 @@ def main() -> None:
         sys.stdout.write('$ ')
         sys.stdout.flush()
 
-        user_input: str = input()
-        command: str = user_input.split(' ')[0]
+        user_input: list[str] = input().split(' ')
+        command: str = user_input[0]
+        arguments: list[str] = user_input[1:]
 
-        match command:
-            case 'exit':
-                exit()
-            
-            case 'echo':
-                content: str = user_input.split(' ', 1)[1]
-                sys.stdout.write(content)
-
-            case _:
-                sys.stdout.write(f"{command}: command not found")
+        if command in builtin_commands:
+            builtin_commands[command](*arguments)
+        else:
+            sys.stdout.write(f"{command}: command not found")
     
         sys.stdout.write('\n')
         sys.stdout.flush()
