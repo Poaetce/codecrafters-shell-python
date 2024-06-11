@@ -49,6 +49,10 @@ def main() -> None:
 
         if command in builtin_commands:
             builtin_commands[command](*arguments)
+
+        elif os.path.isfile(command):
+            os.system(' '.join(user_input))
+
         else:
             sys.stdout.write(f"{command}: command not found")
     
