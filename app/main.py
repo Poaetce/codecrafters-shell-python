@@ -59,7 +59,7 @@ def main() -> None:
             builtin_commands[command](*arguments)
             sys.stdout.write('\n')
 
-        elif file_path := get_file(command):
+        elif get_file(command):
             subprocess.run([command, *arguments])
 
         else:
