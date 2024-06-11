@@ -1,9 +1,19 @@
-from typing import Callable
+from typing import Callable, Optional
 
 import sys
 import os
+import subprocess
 
-paths: list[str] = (os.getenv("PATH") or '').split(":")
+
+def get_file(command: str) -> Optional[str]:
+    paths: list[str] = (os.getenv("PATH") or '').split(":")
+    
+    for path in paths:
+        file_path: str = os.path.join(path, command)
+        if os.path.exists(file_path):
+            return file_path
+    
+    return None
 
 
 def exit_command(*_: str) -> None:
@@ -22,11 +32,9 @@ def type_command(*arguments: str) -> None:
         sys.stdout.write(f"{command} is a shell builtin")
 
     else:
-        for path in paths:
-            file_path: str = os.path.join(path, command)
-            if os.path.exists(file_path):
-                sys.stdout.write(f"{command} is {file_path}")
-                break
+        file_path: Optional[str] = get_file(command)
+        if file_path:
+            sys.stdout.write(f"{command} is {file_path}")
         else:
             sys.stdout.write(f"{command} not found")
 
@@ -50,8 +58,8 @@ def main() -> None:
         if command in builtin_commands:
             builtin_commands[command](*arguments)
 
-        elif os.path.isfile(command):
-            os.system(' '.join(user_input))
+        elif file_path := get_file(command):
+            subprocess.run([command, *arguments])
 
         else:
             sys.stdout.write(f"{command}: command not found")
