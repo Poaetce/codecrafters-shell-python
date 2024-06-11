@@ -39,10 +39,15 @@ def type_command(*arguments: str) -> None:
             sys.stdout.write(f"{command} not found")
 
 
+def pwd_command(*arguments: str) -> None:
+    sys.stdout.write(os.getcwd())
+
+
 builtin_commands: dict[str, Callable] = {
     'exit': exit_command,
     'echo': echo_command,
     'type': type_command,
+    'pwd': pwd_command,
 }
 
 
