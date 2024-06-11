@@ -57,14 +57,15 @@ def main() -> None:
 
         if command in builtin_commands:
             builtin_commands[command](*arguments)
+            sys.stdout.write('\n')
 
         elif file_path := get_file(command):
             subprocess.run([command, *arguments])
 
         else:
             sys.stdout.write(f"{command}: command not found")
+            sys.stdout.write('\n')
     
-        sys.stdout.write('\n')
         sys.stdout.flush()
 
 
