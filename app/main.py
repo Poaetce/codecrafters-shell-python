@@ -56,6 +56,7 @@ builtin_commands: dict[str, Callable] = {
     'echo': echo_command,
     'type': type_command,
     'pwd': pwd_command,
+    'cd': cd_command,
 }
 
 
