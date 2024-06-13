@@ -38,7 +38,7 @@ def pwd_command(*_: str) -> None:
 def cd_command(*arguments: str) -> None:
     directory: str = arguments[0]
     try:
-        os.chdir(directory)
+        os.chdir(os.path.expanduser(directory))
     except:
         sys.stdout.write(f"cd: {directory}: No such file or directory")
         sys.stdout.write('\n')
