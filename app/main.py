@@ -39,8 +39,16 @@ def type_command(*arguments: str) -> None:
             sys.stdout.write(f"{command} not found")
 
 
-def pwd_command(*arguments: str) -> None:
+def pwd_command(*_: str) -> None:
     sys.stdout.write(os.getcwd())
+
+
+def cd_command(*arguments: str) -> None:
+    directory: str = arguments[0]
+    try:
+        os.chdir(directory)
+    except:
+        sys.stdout.write(f"cd: {directory}: No such file or directory")
 
 
 builtin_commands: dict[str, Callable] = {
