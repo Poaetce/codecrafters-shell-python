@@ -1,6 +1,5 @@
 from typing import Callable, Optional
 
-import sys
 import os
 import subprocess
 
@@ -11,28 +10,25 @@ def exit_command(*_: str) -> None:
 
 def echo_command(*arguments: str) -> None:
     content: str = ' '.join(arguments)
-    sys.stdout.write(content)
-    sys.stdout.write('\n')
+    print(content)
 
 
 def type_command(*arguments: str) -> None:
     command: str = arguments[0]
 
     if command in builtin_commands:
-        sys.stdout.write(f"{command} is a shell builtin")
+        print(f"{command} is a shell builtin")
 
     else:
         file_path: Optional[str] = get_file(command)
         if file_path:
-            sys.stdout.write(f"{command} is {file_path}")
+            print(f"{command} is {file_path}")
         else:
-            sys.stdout.write(f"{command}: not found")
-    sys.stdout.write('\n')
+            print(f"{command}: not found")
 
 
 def pwd_command(*_: str) -> None:
-    sys.stdout.write(os.getcwd())
-    sys.stdout.write('\n')
+    print(os.getcwd())
 
 
 def cd_command(*arguments: str) -> None:
@@ -40,8 +36,7 @@ def cd_command(*arguments: str) -> None:
     try:
         os.chdir(os.path.expanduser(directory))
     except:
-        sys.stdout.write(f"cd: {directory}: No such file or directory")
-        sys.stdout.write('\n')
+        print(f"cd: {directory}: No such file or directory")
 
 
 builtin_commands: dict[str, Callable] = {
@@ -66,8 +61,7 @@ def get_file(command: str) -> Optional[str]:
 
 def main() -> None:
     while True:
-        sys.stdout.write('$ ')
-        sys.stdout.flush()
+        print('$ ', end = '')
 
         user_input: list[str] = input().split(' ')
         command: str = user_input[0]
@@ -80,10 +74,7 @@ def main() -> None:
             subprocess.run([command, *arguments])
 
         else:
-            sys.stdout.write(f"{command}: command not found")
-            sys.stdout.write('\n')
-    
-        sys.stdout.flush()
+            print(f"{command}: command not found")
 
 
 if __name__ == "__main__":
