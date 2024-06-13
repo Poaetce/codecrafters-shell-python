@@ -37,7 +37,7 @@ def type_command(*arguments: str) -> None:
         if file_path:
             sys.stdout.write(f"{command} is {file_path}")
         else:
-            sys.stdout.write(f"{command} not found")
+            sys.stdout.write(f"{command}: not found")
     sys.stdout.write('\n')
 
 
