@@ -23,6 +23,7 @@ def exit_command(*_: str) -> None:
 def echo_command(*arguments: str) -> None:
     content: str = ' '.join(arguments)
     sys.stdout.write(content)
+    sys.stdout.write('\n')
 
 
 def type_command(*arguments: str) -> None:
@@ -37,10 +38,12 @@ def type_command(*arguments: str) -> None:
             sys.stdout.write(f"{command} is {file_path}")
         else:
             sys.stdout.write(f"{command} not found")
+    sys.stdout.write('\n')
 
 
 def pwd_command(*_: str) -> None:
     sys.stdout.write(os.getcwd())
+    sys.stdout.write('\n')
 
 
 def cd_command(*arguments: str) -> None:
@@ -49,6 +52,7 @@ def cd_command(*arguments: str) -> None:
         os.chdir(directory)
     except:
         sys.stdout.write(f"cd: {directory}: No such file or directory")
+        sys.stdout.write('\n')
 
 
 builtin_commands: dict[str, Callable] = {
@@ -71,7 +75,6 @@ def main() -> None:
 
         if command in builtin_commands:
             builtin_commands[command](*arguments)
-            sys.stdout.write('\n')
 
         elif get_file(command):
             subprocess.run([command, *arguments])
