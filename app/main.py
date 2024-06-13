@@ -5,17 +5,6 @@ import os
 import subprocess
 
 
-def get_file(command: str) -> Optional[str]:
-    paths: list[str] = (os.getenv("PATH") or '').split(":")
-    
-    for path in paths:
-        file_path: str = os.path.join(path, command)
-        if os.path.exists(file_path):
-            return file_path
-    
-    return None
-
-
 def exit_command(*_: str) -> None:
     exit()
 
@@ -62,6 +51,17 @@ builtin_commands: dict[str, Callable] = {
     'pwd': pwd_command,
     'cd': cd_command,
 }
+
+
+def get_file(command: str) -> Optional[str]:
+    paths: list[str] = (os.getenv("PATH") or '').split(":")
+    
+    for path in paths:
+        file_path: str = os.path.join(path, command)
+        if os.path.exists(file_path):
+            return file_path
+    
+    return None
 
 
 def main() -> None:
